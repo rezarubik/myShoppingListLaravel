@@ -4,7 +4,7 @@
 @section('content')
 <div class="mt-3 mb-3">
     <a href="/product/create" class="btn btn-primary mb-3">Add Things</a>
-    <a href="#" class="btn btn-secondary mb-3">View chart</a>
+    <a href="/product/graph" class="btn btn-secondary mb-3">View chart</a>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>

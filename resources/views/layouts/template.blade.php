@@ -23,7 +23,6 @@
         </div>
     </nav>
     <div class="container">
-    <a href="/product/graph" class="btn btn-secondary">Graph</a>
         <!-- Content -->
         @yield('content')
 
