@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="mt-3 mb-3">
-    <a href="{{route('product.create')}}" class="btn btn-primary mb-3">Add Things</a>
+    <a href="/product/create" class="btn btn-primary mb-3">Add Things</a>
     <a href="#" class="btn btn-secondary mb-3">View chart</a>
     <div class="table-responsive">
         <table class="table table-hover">
@@ -30,12 +30,8 @@
                     <!-- 0 = belum dibeli -->
                     <!-- 1 = sudah dibeli -->
                     <td>
-                        <a class="badge badge-primary" href="{{route('product.edit', $data->id)}}">Edit</a>
-                        <form style="display: inline-block;" method="post" action="{{route('product.destroy',$data->id)}}">
-                            {{csrf_field()}}
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="badge badge-danger">Delete</button>
-                        </form>
+                        <a class="badge badge-primary" href="/product/edit/{{$data->id}}">Edit</a>
+                        <a class="badge badge-danger" href="/product/destroy/{{$data->id}}">Delete</a>
                     </td>
                     <td>
                         <a class="badge badge-warning" href="#">Bought</a>

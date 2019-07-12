@@ -7,7 +7,7 @@
             <h4>Input List Things</h4>
             <div class="card mt-3">
                 <div class="card-body">
-                    <form action="{{route('product.store')}}" class="forms-sample" method="post" role="form">
+                    <form action="/product/store" method="post" class="forms-sample" role="form">
                         {{csrf_field()}}
                         <div class="form-group">
                             <label for="nama_barang">Nama Barang</label>
@@ -37,7 +37,7 @@
                             <span class=" label label-danger">{{$errors->first('price')}}</span>
                             @endif
                         </div>
-                        <a href="{{route('product.index')}}" class="btn btn-default">Back</a>
+                        <a href="/product" class="btn btn-default">Back</a>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>

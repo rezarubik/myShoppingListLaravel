@@ -9,19 +9,14 @@ use App\User;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function login()
+    {
+        return view('authentication/login');
+    }
     public function index()
     {
-        return view('dashboard', [
-            'product' => DB::table('product')
-                ->select('product.id', 'product.name', 'product.id_users', 'product.description', 'product.price', 'product.quantity', 'product.status')
-                ->leftJoin('users', 'product.id_users', '=', 'users.id')
-                ->get()
-        ]);
+        $product = DB::table('product')->get();
+        return view('dashboard', ['product' => $product]);
     }
 
     /**
@@ -31,9 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product.create', [
-            'user' => User::all()
-        ]);
+        return view('product/create');
     }
 
     /**
@@ -55,15 +48,16 @@ class ProductController extends Controller
             'numeric' => 'Wajib diisi dengan angka'
         ];
         $this->validate($request, $rules, $message);
-        Product::create([
+        $query = DB::table('users')->join('product', 'product.id_users', '=', 'users.id')->get();
+        DB::table('product')->insert([
             'name' => $request->name,
-            'id_users' => 1,
+            'id_users' => $query[0]->id,
             'description' => $request->description,
             'price' => $request->price,
             'quantity' => $request->quantity,
             'status' => 0
         ]);
-        return redirect()->route('product.index');
+        return redirect('/product');
     }
 
     /**
@@ -85,7 +79,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = DB::table('product')->where('id', $id)->get();
+        // dd($product);
+        // die();
+        return view('product/edit', ['product' => $product]);
     }
 
     /**
@@ -95,9 +92,29 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'quantity' => 'required|numeric'
+        ];
+        $message = [
+            'required' => 'Data ini wajib diisi!',
+            'numeric' => 'Wajib diisi dengan angka'
+        ];
+        $this->validate($request, $rules, $message);
+        $query = DB::table('users')->join('product', 'product.id_users', '=', 'users.id')->get();
+        DB::table('product')->where('id', $request->id)->update([
+            'name' => $request->name,
+            'id_users' => $query[0]->id,
+            'description' => $request->description,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
+            'status' => 0
+        ]);
+        return redirect('/product');
     }
 
     /**
@@ -106,9 +123,14 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // public function destroy($id)
+    // {
+    //     Product::where('id', $id)->delete();
+    //     return redirect()->route('product.index');
+    // }
     public function destroy($id)
     {
-        Product::where('id', $id)->delete();
-        return redirect()->route('product.index');
+        DB::table('product')->where('id', $id)->delete();
+        return redirect('/product');
     }
 }

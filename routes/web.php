@@ -11,10 +11,16 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
-// Route::get('/', 'HomeController@index');
-Route::resource('/product', 'ProductController');
+Route::get('/', 'ProductController@index');
 Route::get('/dashboard', 'ProductController@index');
+
+Route::get('/product', 'ProductController@index');
+Route::get('/product/create', 'ProductController@create');
+Route::post('/product/store', 'ProductController@store');
+Route::get('/product/edit/{id}', 'ProductController@edit');
+Route::post('/product/update', 'ProductController@update');
+Route::get('/product/destroy/{id}', 'ProductController@destroy');
+
+// Login
+Route::get('/login', 'ProductController@login');

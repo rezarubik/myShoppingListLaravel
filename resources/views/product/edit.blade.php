@@ -7,28 +7,30 @@
             <h4>Edit List Things</h4>
             <div class="card mt-3">
                 <div class="card-body">
-                    <form action="{{route('product.update', $product->id)}}" class="forms-sample" method="post" role="form">
+                    @foreach($product as $data)
+                    <form action="/product/update" class="forms-sample" method="post" role="form">
                         {{csrf_field()}}
                         <div class="form-group">
                             <label for="nama_barang">Nama Barang</label>
-                            <input type="hidden" name="id" class="form-control" placeholder="Enter Nama Barang" value=" {{$product->name_things }}">
-                            <input type="text" name="nama" class="form-control" id="nama_barang" placeholder="Enter Nama Barang" required>
+                            <input type="hidden" name="id" class="form-control" placeholder="Enter Nama Barang" value="{{$data->id}}">
+                            <input type="text" name="name" class="form-control" id="nama_barang" placeholder="Enter Nama Barang" value=" {{$data->name }}">
                         </div>
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi</label>
-                            <input type="text" name="deskripsi" class="form-control" id="deskripsi" placeholder="Enter Description" value="{{$product->description}}">
+                            <input type="text" name="description" class="form-control" id="deskripsi" placeholder="Enter Description" value="{{$data->description}}">
                         </div>
                         <div class="form-group">
                             <label for="Harga">Harga</label>
-                            <input type="text" name="harga" class="form-control" id="Harga" placeholder="Enter Harga" value="{{$product->price}}">
+                            <input type="text" name="price" class="form-control" id="Harga" placeholder="Enter Harga" value="{{$data->price}}">
                         </div>
                         <div class="form-group">
                             <label for="Jumlah">Jumlah</label>
-                            <input type="text" name="jumlah" class="form-control" id="Jumlah" placeholder="Enter Jumlah" value="{{$product->quantity}}">
+                            <input type="text" name="quantity" class="form-control" id="Jumlah" placeholder="Enter Jumlah" value="{{$data->quantity}}">
                         </div>
                         <input type="submit" class="btn btn-success mr-2" value="Tambah">
-                        <a href="{{route('product.index')}}" class="btn btn-light">Cancel</a>
+                        <a href="/" class="btn btn-light">Cancel</a>
                     </form>
+                    @endforeach
                 </div>
             </div>
         </div>
