@@ -140,7 +140,7 @@ class ProductController extends Controller
         $label = [];
 
         foreach ($users as $key => $value) {
-            $data[$key] = DB::table('produks')->where('id_user',$value->id)->count();
+            $data[$key] = DB::table('product')->where('id_users',$value->id)->count();
             $label[$key] = $value->name;
         }
 
