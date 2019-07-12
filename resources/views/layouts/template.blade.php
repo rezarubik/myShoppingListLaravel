@@ -18,12 +18,12 @@
             <div class="text-center">
                 <p>Selamat Datang, Admin!</p>
             </div>
-            <a href="/product/graph" class="nav-link">Graph</a>
             <a href="#" class="btn btn-danger">Logout</a>
         </div>
         </div>
     </nav>
     <div class="container">
+    <a href="/product/graph" class="btn btn-secondary">Graph</a>
         <!-- Content -->
         @yield('content')
 
