@@ -21,6 +21,7 @@ Route::post('/product/store', 'ProductController@store');
 Route::get('/product/edit/{id}', 'ProductController@edit');
 Route::post('/product/update', 'ProductController@update');
 Route::get('/product/destroy/{id}', 'ProductController@destroy');
+Route::get('/product/graph', 'ProductController@grafik');
 
 // Login
 Route::get('/login', 'ProductController@login');

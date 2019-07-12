@@ -133,4 +133,21 @@ class ProductController extends Controller
         DB::table('product')->where('id', $id)->delete();
         return redirect('/product');
     }
+
+    public function grafik(){
+        $users = DB::table('users')->get();
+        $data = [];
+        $label = [];
+
+        foreach ($users as $key => $value) {
+            $data[$key] = DB::table('product')->where('id_users',$value->id)->count();
+            $label[$key] = $value->name;
+        }
+
+        return view('product.graph', [
+            'data'=>json_encode($data),
+            'label'=>json_encode($label)
+        ]);
+
+    }
 }
