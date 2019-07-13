@@ -2,11 +2,9 @@
 <html lang="en">
 
 <head>
-    <title>Halaman Login</title>
+    <title>Halaman Registrasi</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="{{asset('assets/images/icons/favicon.ico')}}" />
     <!--===============================================================================================-->
@@ -38,16 +36,19 @@
             <div class="wrap-login100">
                 <div class="login100-form-title" style="background-image: url({{asset('assets/images/bg-01.jpg')}});">
                     <span class="login100-form-title-1">
-                        Sign In
+                        Registrasi
                     </span>
                 </div>
-                @if ( session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-                @endif
-                <form action="/login" method="post" class="login100-form validate-form">
+                <form action="/registrasi" method="post" class="login100-form validate-form">
                     {{csrf_field()}}
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                        <span class="label-input100">Name</span>
+                        <input class="input100" type="text" name="name" placeholder="Enter Name" value="{{old('name')}}">
+                        @if ($errors->has('name'))
+                        <span class="label label-danger">{{$errors->first('name')}}</span>
+                        @endif
+                        <span class="focus-input100"></span>
+                    </div>
                     <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
                         <span class="label-input100">Email</span>
                         <input class="input100" type="text" name="email" placeholder="Enter Email" value="{{old('email')}}">
@@ -65,21 +66,13 @@
                         @endif
                         <span class="focus-input100"></span>
                     </div>
+
                     <div class="container-login100-form-btn">
                         <button class="login100-form-btn">
-                            Login
+                            Registrasi
                         </button>
                     </div>
                 </form>
-                <div class="regis-btn">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a href="/registrasiForm" style="background-color:blue;" class="login100-form-btn">
-                                Registrasi
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

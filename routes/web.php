@@ -12,8 +12,14 @@
 */
 
 
-Route::get('/', 'ProductController@index');
-Route::get('/dashboard', 'ProductController@index');
+// Route::resource('product', 'ProductController');
+// Login
+Route::get('/', 'AdminController@view_login');
+Route::post('/login', 'AdminController@login');
+Route::get('/logout', 'AdminController@logout');
+Route::get('/registrasiForm', 'AdminController@registrasiForm');
+Route::post('/registrasi', 'AdminController@registrasi');
+Route::get('/dashboard', 'ProductController@index')->middleware('auth');
 
 Route::get('/product', 'ProductController@index');
 Route::get('/product/create', 'ProductController@create');
@@ -23,5 +29,6 @@ Route::post('/product/update', 'ProductController@update');
 Route::get('/product/destroy/{id}', 'ProductController@destroy');
 Route::get('/product/graph', 'ProductController@grafik');
 
-// Login
-Route::get('/login', 'ProductController@login');
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');

@@ -18,7 +18,7 @@
             <div class="text-center">
                 <p>Selamat Datang, Admin!</p>
             </div>
-            <a href="#" class="btn btn-danger">Logout</a>
+            <a href="/logout" class="btn btn-danger">Logout</a>
         </div>
         </div>
     </nav>

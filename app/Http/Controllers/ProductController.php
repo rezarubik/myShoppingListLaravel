@@ -9,10 +9,6 @@ use App\User;
 
 class ProductController extends Controller
 {
-    public function login()
-    {
-        return view('authentication/login');
-    }
     public function index()
     {
         $product = DB::table('product')->get();
@@ -116,6 +112,11 @@ class ProductController extends Controller
         ]);
         return redirect('/product');
     }
+    // this function for update the status. If status = 0 then Bought, if status = 1 then Unbought
+    public function updateStatus(Request $request)
+    {
+        #
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -134,20 +135,20 @@ class ProductController extends Controller
         return redirect('/product');
     }
 
-    public function grafik(){
+    public function grafik()
+    {
         $users = DB::table('users')->get();
         $data = [];
         $label = [];
 
         foreach ($users as $key => $value) {
-            $data[$key] = DB::table('product')->where('id_users',$value->id)->count();
+            $data[$key] = DB::table('product')->where('id_users', $value->id)->count();
             $label[$key] = $value->name;
         }
 
         return view('product.graph', [
-            'data'=>json_encode($data),
-            'label'=>json_encode($label)
+            'data' => json_encode($data),
+            'label' => json_encode($label)
         ]);
-
     }
 }
