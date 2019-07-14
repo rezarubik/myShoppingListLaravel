@@ -11,42 +11,42 @@
             <thead>
                 <tr>
                     <!-- <th scope="col">#</th> -->
-                    <th scope="col">Things</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
-                    <th scope="col">Bought</th>
+                    <th scope="col">Barang</th>
+                    <th scope="col">Deskripsi</th>
+                    <th scope="col">Harga</th>
+                    <th scope="col">Kuantitas</th>
+                    <th scope="col">Status Barang</th>
+                    <th scope="col">Aksi</th>
+                    <!-- <th scope="col">Status</th> -->
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     @foreach($product as $data)
+                    @if($data->status == 0)
                     <td>{{$data->name}}</td>
                     <td>{{$data->description}}</td>
                     <td>{{$data->price}}</td>
                     <td>{{$data->quantity}}</td>
                     <!-- 0 = belum dibeli -->
                     <!-- 1 = sudah dibeli -->
-                    @if($data->status == 0)
-                    <td class="badge badge-danger">Belum Dibeli</td>
+                    <td>
+                        <a class="btn btn-outline-success" href="/product/bought/{{$data->id}}">Belum Dibeli</a>
+                    </td>
                     @elseif($data->status == 1)
-                    <td class="badge badge-primary">Sudah dibeli</td>
+                    <td style="text-decoration:line-through">{{$data->name}}</td>
+                    <td style="text-decoration:line-through">{{$data->description}}</td>
+                    <td style="text-decoration:line-through">{{$data->price}}</td>
+                    <td style="text-decoration:line-through">{{$data->quantity}}</td>
+                    <td>
+                        <!-- <a class="badge badge-warning" href="/product/unbought/{{$data->id}}">Unbought</a> -->
+                        <a class="btn btn-outline-info" href="/product/unbought/{{$data->id}}" style="text-decoration:line-through">Sudah Dibeli</a>
+                    </td>
                     @endif
                     <td>
                         <a class="badge badge-primary" href="/product/edit/{{$data->id}}">Edit</a>
-                        <a class="badge badge-danger" href="/product/destroy/{{$data->id}}">Delete</a>
+                        <a class="badge badge-danger" href="/product/destroy/{{$data->id}}">Hapus</a>
                     </td>
-                    @if($data->status == 0)
-                    <td>
-                        <a class="badge badge-warning" href="/product/bought/{{$data->id}}">Bought</a>
-                    </td>
-                    @elseif($data->status == 1)
-                    <td>
-                        <a class="badge badge-warning" href="/product/unbought/{{$data->id}}">Unbought</a>
-                    </td>
-                    @endif
                 </tr>
                 @endforeach
             </tbody>

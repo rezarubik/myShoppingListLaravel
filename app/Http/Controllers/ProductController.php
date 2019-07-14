@@ -45,6 +45,7 @@ class ProductController extends Controller
         ];
         $this->validate($request, $rules, $message);
         $query = DB::table('users')->join('product', 'product.id_users', '=', 'users.id')->get();
+        // $getNameProduct = DB::table('users')
         DB::table('product')->insert([
             'name' => $request->name,
             'id_users' => $query[0]->id,
