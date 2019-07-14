@@ -21,6 +21,9 @@ Route::get('/registrasiForm', 'AdminController@registrasiForm');
 Route::post('/registrasi', 'AdminController@registrasi');
 Route::get('/dashboard', 'ProductController@index')->middleware('auth');
 
+Route::get('/product/bought/{id}', 'ProductController@bought');
+Route::get('/product/unbought/{id}', 'ProductController@unbought');
+
 Route::get('/product', 'ProductController@index');
 Route::get('/product/create', 'ProductController@create');
 Route::post('/product/store', 'ProductController@store');

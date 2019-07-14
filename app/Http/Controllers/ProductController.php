@@ -113,9 +113,21 @@ class ProductController extends Controller
         return redirect('/product');
     }
     // this function for update the status. If status = 0 then Bought, if status = 1 then Unbought
-    public function updateStatus(Request $request)
+    public function bought(Request $request)
     {
         #
+        DB::table('product')->where('id', $request->id)->update([
+            'status' => 1
+        ]);
+        return redirect('/product');
+    }
+    public function unbought(Request $request)
+    {
+        #
+        DB::table('product')->where('id', $request->id)->update([
+            'status' => 0
+        ]);
+        return redirect('/product');
     }
 
     /**

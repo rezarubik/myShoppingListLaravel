@@ -51,7 +51,7 @@
                     </div>
                     <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
                         <span class="label-input100">Email</span>
-                        <input class="input100" type="text" name="email" placeholder="Enter Email" value="{{old('email')}}">
+                        <input class="input100" type="email" name="email" placeholder="Enter Email" value="{{old('email')}}">
                         @if ($errors->has('email'))
                         <span class="label label-danger">{{$errors->first('email')}}</span>
                         @endif

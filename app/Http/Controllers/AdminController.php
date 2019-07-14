@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Session;
 use DB;
-use function GuzzleHttp\Psr7\hash;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -52,17 +52,20 @@ class AdminController extends Controller
     public function registrasi(Request $request)
     {
         $rules = [
-            'email' => 'required|email',
-            'password' => 'required|password'
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required'
         ];
         $message = [
             'required' => 'Data ini wajib diisi!'
         ];
+        $this->validate($request, $rules, $message);
         DB::table('users')->insert(
             [
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => md5($request->password)
+                'password' => Hash::make($request->password)
+                // 'password' => md5($request->password)
             ]
         );
         return redirect('/');

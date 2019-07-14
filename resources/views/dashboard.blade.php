@@ -27,17 +27,26 @@
                     <td>{{$data->description}}</td>
                     <td>{{$data->price}}</td>
                     <td>{{$data->quantity}}</td>
-                    <td>{{$data->status}}</td>
                     <!-- 0 = belum dibeli -->
                     <!-- 1 = sudah dibeli -->
+                    @if($data->status == 0)
+                    <td class="badge badge-danger">Belum Dibeli</td>
+                    @elseif($data->status == 1)
+                    <td class="badge badge-primary">Sudah dibeli</td>
+                    @endif
                     <td>
                         <a class="badge badge-primary" href="/product/edit/{{$data->id}}">Edit</a>
                         <a class="badge badge-danger" href="/product/destroy/{{$data->id}}">Delete</a>
                     </td>
+                    @if($data->status == 0)
                     <td>
-                        <a class="badge badge-warning" href="#">Bought</a>
-                        <a class="badge badge-warning" href="#">Unbought</a>
+                        <a class="badge badge-warning" href="/product/bought/{{$data->id}}">Bought</a>
                     </td>
+                    @elseif($data->status == 1)
+                    <td>
+                        <a class="badge badge-warning" href="/product/unbought/{{$data->id}}">Unbought</a>
+                    </td>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>
