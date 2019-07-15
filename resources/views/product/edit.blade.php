@@ -39,7 +39,7 @@
                             <span class="label label-danger">{{$errors->first('quantity')}}</span>
                             @endif
                         </div>
-                        <input type="submit" class="btn btn-success mr-2" value="Tambah">
+                        <input type="submit" class="btn btn-success mr-2" value="Edit">
                         <a href="/" class="btn btn-light">Cancel</a>
                     </form>
                     @endforeach

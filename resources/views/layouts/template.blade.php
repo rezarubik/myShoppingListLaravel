@@ -16,7 +16,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <div class="text-center">
-                <p>Selamat Datang, Admin!</p>
+                <p>Selamat Datang, {{Auth::user()->name}} </p>
             </div>
             <a href="/logout" class="btn btn-danger">Logout</a>
         </div>

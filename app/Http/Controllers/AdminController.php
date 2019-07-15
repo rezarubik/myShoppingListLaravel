@@ -26,6 +26,7 @@ class AdminController extends Controller
         // $query = DB::table('users')->select('name')->where('email', '=', $request->email)->get();
         // $product = DB::table('product')->get();
         if (\Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+
             return redirect('product');
             // return view(
             //     'dashboard',

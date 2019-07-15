@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use DB;
 use App\Product;
 use App\User;
+use Auth;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $product = DB::table('product')->get();
+        $id_user = Auth::user()->id;
+        $product = DB::table('product')->where('id_users', $id_user)->get();
         return view('dashboard', ['product' => $product]);
     }
 
@@ -22,7 +24,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product/create');
+        $checkDataError = "";
+        return view('product/create')->with('checkDataError', $checkDataError);
     }
 
     /**
@@ -44,17 +47,41 @@ class ProductController extends Controller
             'numeric' => 'Wajib diisi dengan angka'
         ];
         $this->validate($request, $rules, $message);
-        $query = DB::table('users')->join('product', 'product.id_users', '=', 'users.id')->get();
+        // $query = DB::table('users')->join('product', 'product.id_users', '=', 'users.id')->get();
         // $getNameProduct = DB::table('users')
-        DB::table('product')->insert([
-            'name' => $request->name,
-            'id_users' => $query[0]->id,
-            'description' => $request->description,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-            'status' => 0
-        ]);
-        return redirect('/product');
+
+        $checkName = DB::table('product')
+            ->where([['name', $request->name], ['id_users', Auth::user()->id]])
+            ->count();
+
+        $checkDescription = DB::table('product')
+            ->where([['description', $request->description], ['id_users', Auth::user()->id]])
+            ->count();
+
+        // dd([$checkName, $checkDescription]);
+        // die();
+
+        // $checkDataError = "";
+
+        if ($checkName > 0) {
+            $checkDataError = "Nama barang telah terpakai";
+            return redirect('/product/create')->with('checkDataError', $checkDataError);
+        } else if ($checkDescription > 0) {
+            $checkDataError = "Deskripsi barang tidak boleh sama";
+            return redirect('/product/create')->with('checkDataError', $checkDataError);
+        } else {
+            $id_user = Auth::user()->id;
+            DB::table('product')->insert([
+                'name' => $request->name,
+                'id_users' => $id_user,
+                'description' => $request->description,
+                'price' => $request->price,
+                'quantity' => $request->quantity,
+                'status' => '0'
+            ]);
+
+            return redirect('/product');
+        }
     }
 
     /**
@@ -105,7 +132,7 @@ class ProductController extends Controller
         $query = DB::table('users')->join('product', 'product.id_users', '=', 'users.id')->get();
         DB::table('product')->where('id', $request->id)->update([
             'name' => $request->name,
-            'id_users' => $query[0]->id,
+            'id_users' => Auth::user()->id,
             'description' => $request->description,
             'price' => $request->price,
             'quantity' => $request->quantity,
@@ -150,18 +177,30 @@ class ProductController extends Controller
 
     public function grafik()
     {
-        $users = DB::table('users')->get();
-        $data = [];
-        $label = [];
+        $udahBeli = DB::table('product')->where([['status', '1'], ['id_users', Auth::user()->id]])->get();
+        $belumBeli = DB::table('product')->where([['status', '0'], ['id_users', Auth::user()->id]])->get();
 
-        foreach ($users as $key => $value) {
-            $data[$key] = DB::table('product')->where('id_users', $value->id)->count();
-            $label[$key] = $value->name;
+        $dataBeli = [];
+        $labelBeli = [];
+
+        $dataBelomBeli = [];
+        $labelBelomBeli = [];
+
+        foreach ($udahBeli as $key => $value) {
+            $dataBeli[$key] = DB::table('product')->where('id_users', $value->id_users)->count();
+            $labelBeli[$key] = $value->name;
+        }
+
+        foreach ($belumBeli as $key => $value) {
+            $dataBelomBeli[$key] = DB::table('product')->where('id_users', $value->id_users)->count();
+            $labelBelomBeli[$key] = $value->name;
         }
 
         return view('product.graph', [
-            'data' => json_encode($data),
-            'label' => json_encode($label)
+            'dataBeli' => json_encode($dataBeli),
+            'labelBeli' => json_encode($labelBeli),
+            'dataBelomBeli' => json_encode($dataBelomBeli),
+            'labelBelomBeli' => json_encode($labelBelomBeli)
         ]);
     }
 }
