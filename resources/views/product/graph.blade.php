@@ -33,7 +33,7 @@
     var barChartData1 = {
         labels: <?php echo $labelBeli; ?>,
         datasets: [{
-            label: 'Produk Per Kategori',
+            label: 'Kuantitas',
             backgroundColor: color1(window.chartColors.red).alpha(0.5).rgbString(),
             borderColor: window.chartColors.red,
             borderWidth: 1,
@@ -45,7 +45,7 @@
     var barChartData = {
         labels: <?php echo $labelBelomBeli; ?>,
         datasets: [{
-            label: 'Produk Per Kategori',
+            label: 'Kuantitas',
             backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
             borderColor: window.chartColors.red,
             borderWidth: 1,

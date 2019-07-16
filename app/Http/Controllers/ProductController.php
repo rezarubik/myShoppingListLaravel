@@ -24,8 +24,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $checkDataError = "";
-        return view('product/create')->with('checkDataError', $checkDataError);
+        // $checkDataError = "";
+        return view('product/create');
+        // ->with('checkDataError', $checkDataError);
     }
 
     /**
@@ -37,39 +38,40 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required',
-            'description' => 'required',
+            'name' => 'required|unique:product',
+            'description' => 'required|unique:product',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric'
         ];
         $message = [
             'required' => 'Data ini wajib diisi!',
-            'numeric' => 'Wajib diisi dengan angka'
+            'numeric' => 'Wajib diisi dengan angka',
+            'unique' => 'Nama dan deskripsi tidak boleh sama'
         ];
         $this->validate($request, $rules, $message);
         // $query = DB::table('users')->join('product', 'product.id_users', '=', 'users.id')->get();
         // $getNameProduct = DB::table('users')
 
-        $checkName = DB::table('product')
-            ->where([['name', $request->name], ['id_users', Auth::user()->id]])
-            ->count();
+        // $checkName = DB::table('product')
+        //     ->where([['name', $request->name], ['id_users', Auth::user()->id]])
+        //     ->count();
 
-        $checkDescription = DB::table('product')
-            ->where([['description', $request->description], ['id_users', Auth::user()->id]])
-            ->count();
+        // $checkDescription = DB::table('product')
+        //     ->where([['description', $request->description], ['id_users', Auth::user()->id]])
+        //     ->count();
 
         // dd([$checkName, $checkDescription]);
         // die();
 
         // $checkDataError = "";
 
-        if ($checkName > 0) {
-            $checkDataError = "Nama barang telah terpakai";
-            return redirect('/product/create')->with('checkDataError', $checkDataError);
-        } else if ($checkDescription > 0) {
-            $checkDataError = "Deskripsi barang tidak boleh sama";
-            return redirect('/product/create')->with('checkDataError', $checkDataError);
-        } else {
+        // if ($checkName > 0) {
+        //     $checkDataError = "Nama barang telah terpakai";
+        //     return redirect('/product/create')->with('checkDataError', $checkDataError);
+        // } else if ($checkDescription > 0) {
+        //     $checkDataError = "Deskripsi barang tidak boleh sama";
+        //     return redirect('/product/create')->with('checkDataError', $checkDataError);
+        // } else {
             $id_user = Auth::user()->id;
             DB::table('product')->insert([
                 'name' => $request->name,
@@ -81,7 +83,7 @@ class ProductController extends Controller
             ]);
 
             return redirect('/product');
-        }
+        // }
     }
 
     /**

@@ -6,9 +6,9 @@
         <div class="container mt-4">
             <h4>Input List Things</h4>
             <div class="card mt-3">
-                <!-- @if($checkDataError != "")
-                @endif -->
+                @isset($checkDataError)
                 <span><?php echo $checkDataError; ?></span>
+                @endisset                
                 <div class="card-body">
                     <form action="/product/store" method="post" class="forms-sample" role="form">
                         {{csrf_field()}}
