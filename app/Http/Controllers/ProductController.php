@@ -72,17 +72,17 @@ class ProductController extends Controller
         //     $checkDataError = "Deskripsi barang tidak boleh sama";
         //     return redirect('/product/create')->with('checkDataError', $checkDataError);
         // } else {
-            $id_user = Auth::user()->id;
-            DB::table('product')->insert([
-                'name' => $request->name,
-                'id_users' => $id_user,
-                'description' => $request->description,
-                'price' => $request->price,
-                'quantity' => $request->quantity,
-                'status' => '0'
-            ]);
+        $id_user = Auth::user()->id;
+        DB::table('product')->insert([
+            'name' => $request->name,
+            'id_users' => $id_user,
+            'description' => $request->description,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
+            'status' => '0'
+        ]);
 
-            return redirect('/product');
+        return redirect('/product');
         // }
     }
 
