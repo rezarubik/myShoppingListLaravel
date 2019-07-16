@@ -187,12 +187,14 @@ class ProductController extends Controller
         $labelBelomBeli = [];
 
         foreach ($udahBeli as $key => $value) {
-            $dataBeli[$key] = DB::table('product')->where('id_users', $value->id_users)->count();
+            $query = DB::table('product')->where('id', $value->id)->get();
+            $dataBeli[$key] = $query[0]->quantity;
             $labelBeli[$key] = $value->name;
         }
 
         foreach ($belumBeli as $key => $value) {
-            $dataBelomBeli[$key] = DB::table('product')->where('id_users', $value->id_users)->count();
+            $query = DB::table('product')->where('id', $value->id)->get();
+            $dataBelomBeli[$key] = $query[0]->quantity;
             $labelBelomBeli[$key] = $value->name;
         }
 
