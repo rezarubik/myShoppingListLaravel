@@ -121,8 +121,8 @@ class ProductController extends Controller
     public function update(Request $request)
     {
         $rules = [
-            'name' => 'required',
-            'description' => 'required',
+            'name' => 'required|unique:product',
+            'description' => 'required|unique:product',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric'
         ];
